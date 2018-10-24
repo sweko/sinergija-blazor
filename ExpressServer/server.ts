@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-import { app } from "../app";
+import { app } from "./app";
 import * as debugContext from "debug";
 import * as http from 'http';
 
