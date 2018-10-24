@@ -13,7 +13,6 @@
 
     <DotNetCliToolReference Include="Microsoft.AspNetCore.Blazor.Cli" Version="0.6.0" />
     <Watch Include="**\*.cshtml"/>
-  
   </ItemGroup>
 
 </Project>
