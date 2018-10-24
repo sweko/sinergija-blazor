@@ -25,18 +25,8 @@ authorsApi.get('/id/:id', async function (req, res, next) {
     res.send(author);
 });
 
-authorsApi.post('/', async (req, res, next) => {
-    const repo = (await getRepository)();
-    repo.updateAuthor({
-        wweId: 1,
-        name: "name",
-        bookCount: 10
-    });
-    //res.status(405).send({ message: "Authors are read only resource" });
-})
-
 authorsApi.get('/:id/books/load', async function(req, res, next){
-    //to-do
+
     const id = Number(req.params.id);
     const repo = (await getRepository)();
     const author = await repo.getAuthorById(id);
@@ -130,8 +120,4 @@ authorsApi.patch('/:id', async function(req, res, next) {
         author: author,
         success: true
     });
-});
-
-authorsApi.get('/:id/books', async function(req, res, next){
-    res.send([]);
 });

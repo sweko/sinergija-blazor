@@ -1,0 +1,66 @@
+@page "/authors"
+@inject IAuthorService AuthorService;
+
+<h1>List of authors</h1>
+
+@if (authors == null)
+{
+    <p><em>Loading authors...</em></p>
+}
+else
+{
+    <div>
+        Showing authors @first to @last out of @total
+        <br />
+        <input type="text" bind="@searchTerm" />
+        <button onclick="@Filter">Filter</button>
+
+        <button onclick="@PrevPage">Previous</button>
+        <button onclick="@NextPage">Next</button>
+
+        <AuthorList Authors=authors />
+    </div>
+}
+
+@functions {
+    Author[] authors;
+    int first;
+    int last;
+    int total;
+    string searchTerm;
+
+    int pageIndex = 0;
+    const int pageSize = 20;
+
+    private async Task LoadAuthors(int pageIndex, int pageSize, string searchTerm) {
+        var findex = pageIndex * pageSize;
+        var lindex = (pageIndex+1) * pageSize;
+        var authorResponse = await AuthorService.GetAuthorsFiltered(findex, lindex, searchTerm);
+        authors = authorResponse.Items;
+        first = authorResponse.First;
+        last = authorResponse.Last;
+        total = authorResponse.Total;
+        StateHasChanged();
+    }
+
+    public async void PrevPage(){
+        pageIndex +=1;
+        await LoadAuthors(pageIndex, pageSize, searchTerm);
+    }
+
+    public async void NextPage(){
+        pageIndex +=1;
+        await LoadAuthors(pageIndex, pageSize, searchTerm);
+    }
+
+    public async void Filter(){
+        pageIndex = 0;
+        await LoadAuthors(pageIndex, pageSize, searchTerm);
+    }
+
+
+    protected override async Task OnInitAsync()
+    {
+        await this.LoadAuthors(pageIndex, pageSize, searchTerm);
+    }
+}

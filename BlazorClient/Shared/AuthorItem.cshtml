@@ -1,0 +1,23 @@
+<tr>
+    <td>
+        @Author.WweId
+    </td>
+    <td>
+        <NavLink class="nav-link" href=@GetAuthorLink(Author) Match=NavLinkMatch.All>
+            @Author.Name
+        </NavLink>
+ 
+    </td>
+    <td>
+        @Author.BookCount
+    </td>
+</tr>
+
+@functions {
+    [Parameter]
+    Author Author {get;  set;}
+
+    public string GetAuthorLink(Author author) {
+        return $"author/{author.WweId}";
+    }
+}

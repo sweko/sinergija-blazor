@@ -1,0 +1,22 @@
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Books) {
+                <BookItem Book=book></BookItem>
+            }
+        </tbody>
+
+    </table>
+</div>
+
+@functions {
+    [Parameter]
+    Book[] Books {get; set;}
+}

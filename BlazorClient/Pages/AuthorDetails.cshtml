@@ -1,0 +1,33 @@
+@page "/author/{AuthorId}"
+@inject IAuthorService AuthorService
+
+@if (author == null) {
+    <p><em>Loading author ....</em></p>
+} else {
+    <div>
+        Books by @author.Name:
+
+        @if(author.Books == null) {
+            <button onclick="@LoadBooks">Load Books</button>
+        } else {
+            <BookList Books=author.Books></BookList>
+        }
+    </div>
+}
+
+@functions {
+    [Parameter]
+    string AuthorId {get; set;}
+
+    Author author;
+
+    protected override async Task OnParametersSetAsync() {
+        author = await AuthorService.GetAuthorById(int.Parse(AuthorId));
+    }
+
+    public async void LoadBooks(){
+        var books = await AuthorService.LoadBooks(author.WweId);
+        author.Books = books;
+        StateHasChanged();
+    }
+}
