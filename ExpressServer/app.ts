@@ -6,7 +6,6 @@ import * as logger from "morgan";
 import * as bodyParser from 'body-parser';
 
 import { defaultRouter } from "./routes/index";
-import { usersRouter } from "./routes/users";
 
 import { apiRouter } from "./routes/api";
 
@@ -31,7 +30,6 @@ app.use(bodyParser.json());
 
 
 app.use('/', defaultRouter);
-app.use('/users', usersRouter);
 app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
